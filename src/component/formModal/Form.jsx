@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Form.css";
 import { Button, Checkbox, Form, Input, InputNumber } from "antd";
 import { Modal } from "antd";
@@ -6,12 +6,12 @@ import { DatePicker } from "antd";
 import dayjs from "dayjs";
 import { Select } from "antd";
 
-const FormModal = ({ setModelOpen, modelOpen }) => {
+const FormModal = ({ setModelOpen, modelOpen, eventData }) => {
   const onFinish = (values) => {
-    console.log("Success:", values);
-
+    eventData(values);
     setModelOpen(false);
   };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -38,6 +38,12 @@ const FormModal = ({ setModelOpen, modelOpen }) => {
           autoComplete="off"
           initialValues={{}}
         >
+          <Form.Item label="Id" name="id">
+            <InputNumber
+              placeholder="Please enter your id"
+              
+            />
+            </Form.Item>
           <Form.Item label="Name" name="name">
             <Input placeholder="Please enter your name" />
           </Form.Item>
@@ -48,13 +54,13 @@ const FormModal = ({ setModelOpen, modelOpen }) => {
               max={45}
             />
           </Form.Item>
-          <Form.Item label="Adress" name="adress">
+          <Form.Item label="Address" name="address">
             <Input placeholder="Please enter your adress" />
           </Form.Item>
 
           <Form.Item
             label="Prefered"
-            name="selectItem"
+            name="tags"
             style={{ width: "100%" }}
           >
             <Select
