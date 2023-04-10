@@ -5,14 +5,25 @@ import { Modal } from 'antd';
 import {  Document, Page,Text } from '@react-pdf/renderer'
 
 
-const PdfComponent = ({id}) => {
-    console.log(id,"asaaa")
+const PdfComponent = ({filterData}) => {
+  console.log(filterData,"GGGg")
+
   return (
     
     <Document file="some.pdf" >
       <Page>
-      <Text id='Footnote'>hii\\{id}</Text>
-      
+      <Text >
+          name:{filterData? filterData[0].name: ""}
+      </Text>
+      <Text >
+          Address:{filterData? filterData[0].address: ""}
+      </Text>
+      <Text >
+          Tags:{filterData? filterData[0].tags?.map(e=>{
+            console.log(e,"DFD")
+            return<Text>{e}{","}</Text>
+          }): ""}
+      </Text>
       </Page>
     </Document>
     

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Space, Table, Tag } from "antd";
 import {
   EditOutlined,
@@ -11,8 +11,18 @@ import { PDFDownloadLink, Document, Page } from "@react-pdf/renderer";
 const ActionTable = ({ formData }) => {
   const handlePdfClick = (ids) => {
     // Function to handle the PDF icon click with the array of object IDs
-    console.log(ids,"hhh");
+    console.log(ids, "hhh");
+    const filterData = [...formData?.filter((e) => e.id === ids)];
+    return (
+      <PDFDownloadLink
+        document={<PdfComponent filterData={filterData} />}
+        fileName="somename.pdf"
+      >
+        <FilePdfOutlined style={{ color: "green" }} />
+      </PDFDownloadLink>
+    );
   };
+ 
   const columns = [
     {
       title: "ID",
@@ -67,24 +77,18 @@ const ActionTable = ({ formData }) => {
           <span>
             <DeleteOutlined style={{ color: "red" }} />
           </span>
-          <span>
-            <PDFDownloadLink document={<PdfComponent id={record.id}/>} onClick={() => handlePdfClick(record.id)} fileName="somename.pdf"><FilePdfOutlined style={{ color: "green" }}  /></PDFDownloadLink>
-          </span>
+          <span>{handlePdfClick(record.id)}</span>
         </Space>
       ),
     },
   ];
 
- 
   return (
-    
     <div>
       <Table
         columns={columns}
         dataSource={formData ? formData : "NO data to show"}
         pagination={false}
-       
-        
       />
     </div>
   );
